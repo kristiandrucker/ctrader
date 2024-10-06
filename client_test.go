@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"google.golang.org/protobuf/proto"
 
-	"github.com/diegobernardes/ctrader/openapi"
+	"go.drkr.io/ctrader/openapi"
 )
 
 type mockClient struct {

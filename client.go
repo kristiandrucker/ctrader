@@ -8,10 +8,10 @@ import (
 	"time"
 
 	"github.com/satori/uuid"
-	"golang.org/x/exp/slog"
 	"google.golang.org/protobuf/proto"
+	"log/slog"
 
-	"github.com/diegobernardes/ctrader/openapi"
+	"go.drkr.io/ctrader/openapi"
 )
 
 type clientTransport interface {

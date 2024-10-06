@@ -37,7 +37,7 @@ The easiest way is to use the
 [playground](https://help.ctrader.com/open-api/account-authentication/#using-the-playground).
 
 ### How can I upgrade cTrader OpenAPI protobuf files?
-- Open the [Earthfile](https://github.com/diegobernardes/ctrader/blob/main/Earthfile.md) and edit the 
+- Open the [Earthfile](https://go.drkr.io/ctrader/blob/main/Earthfile.md) and edit the 
 `+compile-proto` target.
 - Execute the target `earthly +compile-proto`.
 - Sync the dependencies `go mod tidy`.

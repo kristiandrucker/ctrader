@@ -3,7 +3,7 @@ on:
     branches:
       - 'main'
 
-name: Update https://pkg.go.dev/github.com/diegobernardes/ctrader
+name: Update https://pkg.go.dev/go.drkr.io/ctrader
 jobs:
   runner:
     name: Runner

@@ -11,9 +11,9 @@ import (
 
 	"github.com/samber/lo"
 	"github.com/stretchr/testify/require"
-	"golang.org/x/exp/slog"
+	"log/slog"
 
-	"github.com/diegobernardes/ctrader/openapi"
+	"go.drkr.io/ctrader/openapi"
 )
 
 func TestClientIntegration(t *testing.T) {
