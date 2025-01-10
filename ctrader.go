@@ -23,6 +23,15 @@ func (e undefinedProtobufResourceError[T]) Error() string {
 	return fmt.Sprintf("undefined payload type '%d'", t.Elem())
 }
 
+type ProtoOAOrderErrorEvent struct {
+	ErrorCode   string
+	Description string
+}
+
+func (p ProtoOAOrderErrorEvent) Error() string {
+	return fmt.Sprintf("%s: %s", p.ErrorCode, p.Description)
+}
+
 // Command is a helper function used to send a request and receive a response.
 //
 // nolint ireturn
@@ -34,6 +43,11 @@ func Command[A, B proto.Message](ctx context.Context, c *Client, req A) (B, erro
 	switch v := resp.(type) {
 	case *openapi.ProtoOAErrorRes:
 		return *new(B), errors.New("failed authenticate the account")
+	case *openapi.ProtoOAOrderErrorEvent:
+		return *new(B), &ProtoOAOrderErrorEvent{
+			ErrorCode:   v.GetErrorCode(),
+			Description: v.GetDescription(),
+		}
 	case B:
 		return v, nil
 	default:
