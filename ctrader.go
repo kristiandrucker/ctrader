@@ -2,7 +2,6 @@ package ctrader
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"reflect"
 
@@ -40,7 +39,7 @@ type ProtoOAOrderError struct {
 	RetryAfter  time.Duration
 }
 
-func (p ProtoOAOrderErrorEvent) Error() string {
+func (p ProtoOAOrderError) Error() string {
 	return fmt.Sprintf("%s: %s", p.ErrorCode, p.Description)
 }
 
