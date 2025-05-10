@@ -7,9 +7,10 @@ import (
 	"sync/atomic"
 	"time"
 
+	"log/slog"
+
 	"github.com/satori/uuid"
 	"google.golang.org/protobuf/proto"
-	"log/slog"
 
 	"go.drkr.io/ctrader/openapi"
 )
@@ -73,27 +74,27 @@ func (c *Client) handlerMessage(payload []byte) {
 		c.Logger.Error("failed to unmarshal message", "error", err)
 		return
 	}
-	if msg.GetClientMsgId() == "" {
-		message, err := mappingResponse(msg.GetPayloadType())
-		if err != nil {
-			c.Logger.Error("unknow message type", "error", err)
-			return
-		}
-		if err = proto.Unmarshal(msg.GetPayload(), message); err != nil {
-			c.Logger.Error("failed to unmarshal payload", "error", err)
-			return
-		}
-		c.HandlerEvent(message)
-	} else {
-		c.requestRegistryMutex.Lock()
-		chanResponse, ok := c.requestRegistry[msg.GetClientMsgId()]
-		c.requestRegistryMutex.Unlock()
-		if !ok {
-			c.Logger.Error("client message ID not found", "clientMessageID", msg.GetClientMsgId())
-			return
-		}
-		chanResponse <- &msg
+	//if msg.GetClientMsgId() == "" {
+	message, err := mappingResponse(msg.GetPayloadType())
+	if err != nil {
+		c.Logger.Error("unknow message type", "error", err)
+		return
 	}
+	if err = proto.Unmarshal(msg.GetPayload(), message); err != nil {
+		c.Logger.Error("failed to unmarshal payload", "error", err)
+		return
+	}
+	c.HandlerEvent(message)
+	//} else {
+	//	c.requestRegistryMutex.Lock()
+	//	chanResponse, ok := c.requestRegistry[msg.GetClientMsgId()]
+	//	c.requestRegistryMutex.Unlock()
+	//	if !ok {
+	//		c.Logger.Error("client message ID not found", "clientMessageID", msg.GetClientMsgId())
+	//		return
+	//	}
+	//	chanResponse <- &msg
+	//}
 }
 
 func (c *Client) handlerError(err error) {
